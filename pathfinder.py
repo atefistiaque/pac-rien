@@ -4,74 +4,46 @@ import math
 import mapHandler
 import asyncio
 
-
-cachingSystem = {}  
-thisDrone = 0
-path = []
-blacklistParts = []
 class drone:
-    def __init__(self):
-        self.size = pygame.Vector2(60, 60)
-        self.image = pygame.transform.scale(pygame.image.load("assets/droneShip.png").convert_alpha(), (self.size.x, self.size.y)) 
-        self.idle = True
-        self.position = pygame.Vector2(500, 300)
-        self.rotation = 0
-        global thisDrone
-        thisDrone = self
+    blacklistZone = []
+    def updateBlacklistZone():
+        for i in mapHandler.notGuff:
+            drone.blacklistZone.clear()
+            drone.blacklistZone.append({"xLeft": i.rect.left, "XRight": i.rect.right, "yTop": i.rect.top, "yBottom": i.rect.bottom})
 
-    def move(self):
-        global path
-        if (not self.idle):    
-            if (len(path) > 1):
-                myNode = path[1]
-                oldNode = path[0]
-                if not (myNode.get("start").x -5 < (self.position).x and myNode.get("start").x + 5 > (self.position).x and myNode.get("start").y + 5 > (self.position).y and myNode.get("start").y - 5 < (self.position).y):
-                    self.position = self.position + oldNode.get("moveVec")
-                    print(oldNode)
-                else:
-                    del path[0]
-            if len(path) == 1:
-                myNode = path[0].get("goal")
-                if not (myNode.x -5 < (self.position).x and myNode.x + 5 > (self.position).x and myNode.y + 5 > (self.position).y and myNode.y - 5 < (self.position).y):
-                    self.position = self.position + path[0].get("moveVec")
-                    print(path[0])
-                else:
-                    self.idle = True
-                    path.clear()
-            
+
+    def __init__(self):
+        self.size = pygame.Vector2(100, 100)
+        self.image = pygame.transform.scale(pygame.image.load("rienriengoaway.png").convert_alpha(), (self.size.x, self.size.y)) 
+        self.status = "Idle"
+        self.position = pygame.Vector2(500, 300)
+        self.rotation = 0 # we use this to figure out where rien is looking aka the direction he's moving and stuff
+
+        self.cachingSystem = {}  
+        self.truePath = {}
+        self.active = {}
+
+    def tickMove(self): # special function marked with "tick[NAME]" used to run everything parallel as i am working on figuring out proper coroutines
+        if (not self.status == "Idle"):    
+            print("hi") # replace this with looping through the truePath dictionary, start by reading the first 3 characters and keep going by every next 3 characters
+    
 
     def buildNewPath(self, target):
-        global path
-        global cachingSystem
-        self.idle = True
-        path.clear()
-        cachingSystem.clear()
+        self.status = "Idle"
+        self.truePath.clear()
+        self.cachingSystem.clear()
+        self.cachingSystem["T1-"] = {"position": self.position, "goal": target, "locked": True, "success": False}
+        self.cachingSystem["F1-"] = {"position": self.position, "goal": target, "locked": False, "success": False}
 
-        for i in mapHandler.notGuff:
-            print("hi")
+        self.tickFind(self)
+        # working on some code 
+        # essentially trying to create a "SUCCESS" marked as true meeting up with a "SUCCESS" marked as false
+        # the true success starts at the end location and goes outwards to the start, vice versa for the false success
+        # once the false and true success are made, the path has successfully been found!
 
-        cachingSystem["T1-"] = {"position": self.position, "goal": target, "name": "T1-", "locked": False, "success": False, "type": "goal"}
 
-    def tickForward(self): 
-        global path
-        global cachingSystem
+    def tickFind(self):  # special function marked with "tick[NAME]" used to run everything parallel as i am working on figuring out proper coroutines
         carryK, carryV = 0, 0
-        for key, val in list(cachingSystem.items()):
-            if (not val.get("locked")):
-
-
-                    
-                if (val.get("goal").x - 20 < val.get("current").x and val.get("current").x < val.get("goal").x + 20) and (val.get("goal").y - 20 < val.get("current").y and val.get("current").y < val.get("goal").y + 20):
-                    val["locked"] = True
-                    val["success"] = True
-                    carryK = key
-                    carryV = val
-                    break
-    
-        if carryV != 0:
-            if carryV.get("success"):
-                for i in range(3, len(carryK)+1, 3):
-                    sendToList = cachingSystem.get(carryK[0:i])
-                    path.append(sendToList)
-                self.idle = False
-                cachingSystem.clear()
+        for key, val in list(self.active.items()):
+            print("hi")
+        self.status = "Moving"
