@@ -13,7 +13,7 @@ class mapObject(pygame.sprite.Sprite):
         super().__init__()
         objects[objName] = self
         self.objVerts = objVerts
-        self.dragable = objName == "rien"
+        self.dragable = objName == "drag"
         self.image = pygame.transform.scale(image, (self.objVerts.get("sizeX"), self.objVerts.get("sizeY")))
         self.rect = self.image.get_rect()
         self.rect.x = self.objVerts.get("spawnVec").x
