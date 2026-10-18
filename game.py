@@ -20,7 +20,12 @@ async def main():
     moving = pygame.Vector2(0,0)
     shift = pygame.Vector2(0,0)
 
-    plr = mapHandler.mapObject("player", pygame.image.load("fauna.png").convert_alpha(), {"spawnVec": pygame.Vector2(width/2, length/2), "sizeX": 50, "sizeY": 50, "center": pygame.Vector2((width+100)/2, (length+100)/2)})
+
+    mapHandler.genMap()
+    plr = mapHandler.mapObject("player", pygame.image.load("fauna.png").convert_alpha(), {"spawnVec": pygame.Vector2(width/2, length/2), "sizeX": 50, "sizeY": 50})
+    
+
+
 
     slideVec = pygame.Vector2(0, 0)
     tickHi = -1
@@ -33,7 +38,7 @@ async def main():
                 running = False
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     dragging = True
-                    for key, val in mapHandler.objects.items():
+                    for val in mapHandler.objects:
                         if (val.rect.collidepoint(pygame.mouse.get_pos()) and val.dragable):
                             moving = val.rect
                             break
@@ -61,9 +66,10 @@ async def main():
         if slideVec.y > 0: slideVec = slideVec + pygame.Vector2(0, -limiter)
         if slideVec.y < 0: slideVec = slideVec + pygame.Vector2(0, limiter)
 
-        mapHandler.objects.get("player").rect.x += slideVec.x
-        mapHandler.objects.get("player").rect.y += slideVec.y
+        plr.rect.x += slideVec.x
+        plr.rect.y += slideVec.y
 
+                
                 
         for i in enemyList: i.move()
         mapHandler.loadScreen(screen)
