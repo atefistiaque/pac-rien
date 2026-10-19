@@ -48,10 +48,39 @@ def specialBounds():
             if val.rect.y < val.objVerts.get("minY"): val.rect.y = val.objVerts.get("minY")
 
 def genMap():
-    mapObject("drag", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(200, 250), "sizeX":50, "sizeY": 75, "minX": 100, "maxX": 200, "minY": 100, "maxY":200})
-    mapObject("wall", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(0, length-100), "sizeX":width, "sizeY": 100})
-    mapObject("wall", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(0, 0), "sizeX":width, "sizeY": 100})
+    mapObject("drag", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(200, 270), "sizeX":60, "sizeY": 50, "minX": 100, "maxX": 200, "minY": 100, "maxY":200})
+
+    mapObject("wall", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(0, 0), "sizeX":width/2 - 100, "sizeY": 50})
+    mapObject("wall", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(width/2 + 100, 0), "sizeX":width/2 - 100, "sizeY": 50})
+    mapObject("wall", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(0, length - 50), "sizeX":width/2 - 100, "sizeY": 50})
+    mapObject("wall", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(width/2 + 100, length - 50), "sizeX":width/2 - 100, "sizeY": 50})
+
+    mapObject("wall", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(350, 200), "sizeX":150, "sizeY": 60})
+    mapObject("wall", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(800, 300), "sizeX":90, "sizeY": 40})
     
+    mapObject("wall", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(width/2 - 70, 100), "sizeX":180, "sizeY": 70})
+    mapObject("wall", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(width/2 - 35, 170), "sizeX":40, "sizeY": 100})
+    
+    mapObject("wall", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(830, 340), "sizeX":20, "sizeY": 80})
+    
+    mapObject("wall", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(1000, 300), "sizeX":200, "sizeY": 40})
+    mapObject("wall", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(200, 420), "sizeX":250, "sizeY": 30})
+    mapObject("wall", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(230, 350), "sizeX":30, "sizeY": 70})
+    
+    mapObject("wall", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(1100, length - 150), "sizeX":30, "sizeY": 100})
+    
+    mapObject("wall", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(1000, 50), "sizeX":30, "sizeY": 100})
+    
+    mapObject("wall", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(1130, 150), "sizeX":150, "sizeY": 60})
+    mapObject("wall", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(0, length/2 - 45), "sizeX":30, "sizeY": 150})
+    
+    mapObject("wall", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(width/2 - 100, length - 150), "sizeX":200, "sizeY": 50})
+    mapObject("wall", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(width/2 + 50, length - 240), "sizeX":50, "sizeY": 90})
+    
+    mapObject("wall", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(830, 150), "sizeX":90, "sizeY": 50})
+    
+    mapObject("wall", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(50, 100), "sizeX":200, "sizeY": 50})
+
 def loadScreen(screen): 
     checkCols()
     specialBounds()
