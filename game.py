@@ -25,7 +25,7 @@ async def main():
     plr = mapHandler.mapObject("player", pygame.image.load("fauna.png").convert_alpha(), {"spawnVec": pygame.Vector2(width/2, length/2), "sizeX": 50, "sizeY": 50})
     
 
-
+    pathfinder.drone.setupBlacklist()
 
     slideVec = pygame.Vector2(0, 0)
     tickHi = -1
@@ -52,12 +52,13 @@ async def main():
                     vec2 = pygame.Vector2(pygame.mouse.get_pos())
                     moving.x = vec2.x + shift.x
                     moving.y = vec2.y + shift.y
-            
+
+        maxSpeed = 2
         keys = pygame.key.get_pressed()
-        if ((keys[pygame.K_UP] or keys[pygame.K_w]) and slideVec.y >= -5): slideVec = slideVec + pygame.Vector2(0, -2)
-        if ((keys[pygame.K_LEFT] or keys[pygame.K_a]) and slideVec.x >= -5): slideVec = slideVec + pygame.Vector2(-2, 0)
-        if ((keys[pygame.K_RIGHT] or keys[pygame.K_d]) and slideVec.x <= 5): slideVec = slideVec + pygame.Vector2(2, 0)
-        if ((keys[pygame.K_DOWN] or keys[pygame.K_s]) and slideVec.y <= 5): slideVec = slideVec + pygame.Vector2(0, 2)
+        if ((keys[pygame.K_UP] or keys[pygame.K_w]) and slideVec.y >= -maxSpeed): slideVec = slideVec + pygame.Vector2(0, -2)
+        if ((keys[pygame.K_LEFT] or keys[pygame.K_a]) and slideVec.x >= -maxSpeed): slideVec = slideVec + pygame.Vector2(-2, 0)
+        if ((keys[pygame.K_RIGHT] or keys[pygame.K_d]) and slideVec.x <= maxSpeed): slideVec = slideVec + pygame.Vector2(2, 0)
+        if ((keys[pygame.K_DOWN] or keys[pygame.K_s]) and slideVec.y <= maxSpeed): slideVec = slideVec + pygame.Vector2(0, 2)
 
 
         limiter = 0.25

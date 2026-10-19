@@ -6,13 +6,22 @@ import asyncio
 
 class drone:
     blacklistZone = []
+    tempBlacklistZone = []
     def updateBlacklistZone():
-        for i in mapHandler.notGuff:
-            drone.blacklistZone.clear()
-            drone.blacklistZone.append({"xLeft": i.rect.left, "XRight": i.rect.right, "yTop": i.rect.top, "yBottom": i.rect.bottom})
+        drone.tempBlacklistZone.clear()
+        for i in mapHandler.mapCols:
+            if (i.dragable):
+                drone.tempBlacklistZone.append({"xMin": i.rect.left, "xMax": i.rect.right, "yMin": i.rect.top, "yMax": i.rect.bottom})
+                
+    def setupBlacklist():
+        for i in mapHandler.mapCols:
+            if (not i.dragable):
+                drone.blacklistZone.append({"xMin": i.rect.left, "xMax": i.rect.right, "yMin": i.rect.top, "yMax": i.rect.bottom})
 
+        drone.updateBlacklistZone()
 
     def __init__(self):
+
         self.size = pygame.Vector2(100, 100)
         self.image = pygame.transform.scale(pygame.image.load("rienriengoaway.png").convert_alpha(), (self.size.x, self.size.y)) 
         self.status = "Idle"
