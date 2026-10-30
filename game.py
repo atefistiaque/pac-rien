@@ -107,7 +107,7 @@ async def main():
                 (c.x, c.y)
             )
 
-        while len(coins) < len(locs):
+        while len(coins) < 7:
             newcoin = locs[random.randint(0, len(locs) - 1)]
             
             there = False
