@@ -48,7 +48,7 @@ def specialBounds():
             if val.rect.y < val.objVerts.get("minY"): val.rect.y = val.objVerts.get("minY")
 
 def genMap():
-    mapObject("drag", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(150, 270), "sizeX":60, "sizeY": 90, "minX": 100, "maxX": 200, "minY": 150, "maxY":200})
+    mapObject("drag", pygame.image.load("movingWall.png").convert_alpha(), {"spawnVec": pygame.Vector2(150, 270), "sizeX":60, "sizeY": 90, "minX": 100, "maxX": 200, "minY": 150, "maxY":200})
 
     mapObject("wall", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(0, 0), "sizeX":width/2 - 100, "sizeY": 50})
     mapObject("wall", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(width/2 + 100, 0), "sizeX":width/2 - 100, "sizeY": 50})
@@ -69,7 +69,7 @@ def genMap():
     
     mapObject("wall", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(1100, length - 150), "sizeX":30, "sizeY": 100})
     
-    mapObject("drag", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(950, 50), "sizeX":30, "sizeY": 100, "minX": 900, "maxX": 1200, "minY": 50, "maxY":50})
+    mapObject("drag", pygame.image.load("movingWall.png").convert_alpha(), {"spawnVec": pygame.Vector2(950, 50), "sizeX":30, "sizeY": 100, "minX": 900, "maxX": 1200, "minY": 50, "maxY":50})
     
     mapObject("wall", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(1070, 150), "sizeX":150, "sizeY": 60})
     
@@ -80,9 +80,9 @@ def genMap():
     
     mapObject("wall", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(50, 100), "sizeX":200, "sizeY": 50})
 
-    mapObject("drag", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(1000, 300), "sizeX":30, "sizeY": 110, "minX": 1000, "maxX": 1200, "minY": 340, "maxY":450})
+    mapObject("drag", pygame.image.load("movingWall.png").convert_alpha(), {"spawnVec": pygame.Vector2(1000, 300), "sizeX":30, "sizeY": 110, "minX": 1000, "maxX": 1200, "minY": 340, "maxY":340})
     
-    mapObject("drag", pygame.image.load("wall.png").convert_alpha(), {"spawnVec": pygame.Vector2(80, length/2 + 100), "sizeX":30, "sizeY": 100, "minX": 70, "maxX": 400, "minY": length/2 + 150, "maxY":length - 150})
+    mapObject("drag", pygame.image.load("movingWall.png").convert_alpha(), {"spawnVec": pygame.Vector2(80, length/2 + 100), "sizeX":30, "sizeY": 100, "minX": 70, "maxX": 400, "minY": length/2 + 150, "maxY":length - 150})
 
 def loadScreen(screen): 
     checkCols()

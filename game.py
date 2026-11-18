@@ -15,7 +15,6 @@ async def main():
     screen = pygame.display.set_mode((width, length))
     pygame.display.set_caption("Pac-Rien")
 
-    enemyList = []
     dragging = False
     moving = pygame.Vector2(0,0)
     shift = pygame.Vector2(0,0)
@@ -52,11 +51,12 @@ async def main():
 
     coins = []
 
+    rien = pathfinder.drone()
+    pathfinder.drone.setupBlacklist()
     slideVec = pygame.Vector2(0, 0)
     tickHi = -1
     running = True
     while running:
-        for i in enemyList: i.tickForward()
         tickHi += 1
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -69,6 +69,10 @@ async def main():
                             break
                     vec2 = pygame.Vector2(pygame.mouse.get_pos())
                     shift = pygame.Vector2(val.rect.x - vec2.x, val.rect.y - vec2.y)
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3: 
+                pathfinder.drone.updateBlacklistZone()
+                pos = pygame.mouse.get_pos()
+                rien.buildNewPath(pygame.Vector2(pos[0], pos[1]))
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                     dragging = False
                     shift, moving = pygame.Vector2(0,0), pygame.Vector2(0,0)
@@ -97,10 +101,13 @@ async def main():
             if plr.rect.colliderect(coin):
                 coins.remove(coin)
                 mapHandler.score += 1
-                
-        for i in enemyList: i.move()
-        mapHandler.loadScreen(screen)
 
+        rien.tickFind()
+        rien.tickMove()
+        
+        mapHandler.loadScreen(screen)
+        screen.blit(rien.image, (rien.position.x, rien.position.y))
+        rien.displayPaths(screen)
         for c in coins:
             screen.blit(
                 coin_image,
