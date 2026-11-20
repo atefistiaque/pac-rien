@@ -3,10 +3,12 @@ import sys
 import math
 import mapHandler
 import asyncio
+import random
 
 width = 1280
 length = 600
 differ = 20
+max = 4000
 
 class drone:
     blacklistZone = []
@@ -42,6 +44,19 @@ class drone:
         self.cachingSystem = {}
         self.truePath = []
 
+    def updateRect(self):
+    
+    def collisions(self):
+        for value in mapHandler.objects:
+                touch = pygame.sprite.spritecollide(self, mapHandler.mapCols, False)
+                for block in touch:
+                    if (block.objName == "wall"):
+                        if (value.rect.top > block.rect.centery - (block.rect.height/2)) and (block.rect.right - 1 > value.rect.centerx > block.rect.left + 1): value.rect.top = block.rect.bottom
+                        elif (value.rect.bottom < block.rect.centery + (block.rect.height/2)) and (block.rect.right - 1 > value.rect.centerx > block.rect.left + 1):  value.rect.bottom = block.rect.top
+                        elif (value.rect.right < block.rect.centerx + (block.rect.width/2)) and (block.rect.bottom - 1 > value.rect.centery > block.rect.top + 1):  value.rect.right = block.rect.left
+                        elif (value.rect.left > block.rect.centerx - (block.rect.width/2)) and (block.rect.bottom - 1 > value.rect.centery > block.rect.top + 1):  value.rect.left = block.rect.right
+        
+    
     def displayPaths(self, surface):
         if self.status == "Idle":
             for key, val in self.cachingSystem.items():
@@ -80,6 +95,7 @@ class drone:
     def buildNewPath(self, target): #reminder that target should be a Vector2
         self.burnDOWN(target)
 
+        drone.updateBlacklistZone()
         startVec = self.findCenter(pygame.Vector2(self.position.x + self.size.x/2, self.position.y + self.size.y/2))
         endVec = self.findCenter(pygame.Vector2(target.x, target.y))
         
@@ -121,9 +137,12 @@ class drone:
             if ((nowVal.get("success") != val.get("success")) and newLock == val.get("position")):
                 return (True, key)
         return (False, "nil")
+
+    def toNode(self):
+        node = mapHandler.locs[random.randint(0, len(mapHandler.locs) - 1)]
+        self.buildNewPath(pygame.Vector2(node.x+30, node.y+30))
     
     def tickFind(self):  # special function marked with "tick[NAME]" used to run everything parallel as i am working on figuring out proper coroutines
-        max = 999999999
         if (self.ticks >= max): self.burnDOWN(self.position)
         if (self.status == "Idle" and self.target != self.position and self.ticks <= max):
             discovery = {}
@@ -144,6 +163,7 @@ class drone:
                             if (good):
                                 self.finality(key, jK)
                                 safe = False
+                                self.ticks = 0
                                 break
                             if (not newKey in self.cachingSystem and not newKey in discovery):
                                 discovery[newKey] = {"name": newName, "position": newLoc, "success": val.get("success"), "locked": False}

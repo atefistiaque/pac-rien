@@ -27,6 +27,23 @@ class mapObject(pygame.sprite.Sprite):
         self.rect.y = self.objVerts.get("spawnVec").y
         objects.append(self)
 
+locs = [
+        pygame.Rect(20, 480, 60, 60),
+        pygame.Rect(100, 350, 60, 60),
+
+        pygame.Rect(400, 450, 60, 60),
+
+        pygame.Rect(550, 290, 60, 60),
+        pygame.Rect(650, 170, 60, 60),
+
+        pygame.Rect(780, 70, 60, 60),
+        pygame.Rect(860, 270, 60, 60),
+        pygame.Rect(900, 400, 60, 60),
+
+        pygame.Rect(1050, 75, 60, 60),
+        pygame.Rect(1180, 470, 60, 60)
+    ]
+
 def checkCols():
     for value in objects:
         touch = []

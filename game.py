@@ -26,28 +26,7 @@ async def main():
     coin_image = pygame.image.load("flower.png").convert_alpha()
     coin_image = pygame.transform.scale(coin_image, (60, 60))
 
-    locs = [
-        pygame.Rect(20, 480, 60, 60),
-        pygame.Rect(50, 180, 60, 60),
-        pygame.Rect(100, 350, 60, 60),
-
-        pygame.Rect(230, 200, 60, 60),
-        pygame.Rect(300, 100, 60, 60),
-        pygame.Rect(400, 450, 60, 60),
-
-        pygame.Rect(550, 290, 60, 60),
-        pygame.Rect(590, 10, 60, 60),
-        pygame.Rect(650, 170, 60, 60),
-
-        pygame.Rect(780, 70, 60, 60),
-        pygame.Rect(860, 270, 60, 60),
-        pygame.Rect(900, 400, 60, 60),
-
-        pygame.Rect(1050, 75, 60, 60),
-        pygame.Rect(1070, 350, 60, 60),
-        pygame.Rect(1140, 230, 60, 60),
-        pygame.Rect(1180, 470, 60, 60)
-    ]
+    
 
     coins = []
 
@@ -70,7 +49,6 @@ async def main():
                     vec2 = pygame.Vector2(pygame.mouse.get_pos())
                     shift = pygame.Vector2(val.rect.x - vec2.x, val.rect.y - vec2.y)
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3: 
-                pathfinder.drone.updateBlacklistZone()
                 pos = pygame.mouse.get_pos()
                 rien.buildNewPath(pygame.Vector2(pos[0], pos[1]))
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
@@ -81,7 +59,10 @@ async def main():
                     vec2 = pygame.Vector2(pygame.mouse.get_pos())
                     moving.x = vec2.x + shift.x
                     moving.y = vec2.y + shift.y
-            
+
+        if (rien.ticks == 0 and rien.status == "Idle"):
+            rien.toNode()
+        
         keys = pygame.key.get_pressed()
         if ((keys[pygame.K_UP] or keys[pygame.K_w]) and slideVec.y >= -5): slideVec = slideVec + pygame.Vector2(0, -2)
         if ((keys[pygame.K_LEFT] or keys[pygame.K_a]) and slideVec.x >= -5): slideVec = slideVec + pygame.Vector2(-2, 0)
@@ -115,8 +96,7 @@ async def main():
             )
 
         while len(coins) < 7:
-            newcoin = locs[random.randint(0, len(locs) - 1)]
-            
+            newcoin = mapHandler.locs[random.randint(0, len(mapHandler.locs) - 1)]
             there = False
             for c in coins:
                 if c == newcoin:
